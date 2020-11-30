@@ -18,7 +18,7 @@ export const TO_MAIN: string[] = [
 	SET_SHOW,
 ];
 
-export const FROM_MAIN: string[] = [];
+export const FROM_MAIN: string[] = [SET_FULLSCREEN_BREAK];
 
 export const RELEASED_NOTES_LINK =
 	"https://github.com/roldanjr/pomatez/releases/latest";

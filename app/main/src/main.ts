@@ -228,6 +228,14 @@ if (!onlySingleIntance) {
 					win?.show();
 				},
 			},
+			{
+				key: "Alt+Shift+R",
+				callback: () => {
+					// win?.setFullScreen(false);
+					// isFullScreen = false;
+					win?.webContents.send(SET_FULLSCREEN_BREAK, false);
+				},
+			},
 		]);
 
 		const autoUpdater = activateAutoUpdate({

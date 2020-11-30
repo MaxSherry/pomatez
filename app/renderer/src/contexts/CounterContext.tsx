@@ -378,13 +378,13 @@ const CounterProvider: React.FC = ({ children }) => {
 	]);
 
 	useEffect(() => {
-		if (settings.enableFullscreenBreak) {
-			if (timer.timerType !== STAY_FOCUS) {
-				setShouldFullscreen(true);
-			} else {
-				setShouldFullscreen(false);
-			}
+		// if (settings.enableFullscreenBreak) {
+		if (timer.timerType !== STAY_FOCUS) {
+			setShouldFullscreen(settings.enableFullscreenBreak);
+		} else {
+			setShouldFullscreen(false);
 		}
+		// }
 	}, [settings.enableFullscreenBreak, timer.timerType]);
 
 	return (

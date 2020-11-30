@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import isElectron from "is-electron";
 import {
 	SET_MINIMIZE,
@@ -12,7 +12,7 @@ import {
 	TRAY_ICON_UPDATE,
 } from "@pomatez/shareables";
 
-import { AppStateTypes, SettingTypes } from "store";
+import { AppStateTypes, SettingTypes, setEnableFullscreenBreak } from "store";
 import { CounterContext } from "./CounterContext";
 import { TraySVG } from "components";
 import { encodeSvg } from "utils";
@@ -70,6 +70,17 @@ const ElectronProvider: React.FC = ({ children }) => {
 			});
 		}
 	}, [electron]);
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (isElectron()) {
+			let enableFullscreenBreak = settings.enableFullscreenBreak;
+			electron.recieve(SET_FULLSCREEN_BREAK, (arg: any) => {
+				enableFullscreenBreak = !enableFullscreenBreak;
+				dispatch(setEnableFullscreenBreak(enableFullscreenBreak));
+			});
+		}
+	}, []);
 
 	useEffect(() => {
 		if (isElectron() && !settings.enableFullscreenBreak) {
