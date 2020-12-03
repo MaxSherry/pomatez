@@ -19,4 +19,10 @@ contextBridge.exposeInMainWorld("electron", {
 	openExternal: (url: string, options?: Electron.OpenExternalOptions) => {
 		shell.openExternal(url);
 	},
+	recieveOnce: (channel: string, listener: (...args: any[]) => void) => {
+		ipcRenderer.once(channel, listener);
+	},
+	removeAllListeners: (channel: string) => {
+		ipcRenderer.removeAllListeners(channel);
+	},
 });

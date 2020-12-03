@@ -72,18 +72,17 @@ const ElectronProvider: React.FC = ({ children }) => {
 	}, [electron]);
 
 	const dispatch = useDispatch();
-	const toggleFullscreenBreak = useCallback(() => {
+	useEffect(() => {
 		if (isElectron()) {
-			let enableFullscreenBreak = settings.enableFullscreenBreak;
-			electron.recieve(SET_FULLSCREEN_BREAK, (arg: any) => {
-				enableFullscreenBreak = !enableFullscreenBreak;
-				dispatch(setEnableFullscreenBreak(enableFullscreenBreak));
-			});
+			let handler = () => {
+				dispatch(setEnableFullscreenBreak(!settings.enableFullscreenBreak));
+			};
+			electron.recieveOnce(SET_FULLSCREEN_BREAK, handler);
+			return () => {
+				electron.removeAllListeners(SET_FULLSCREEN_BREAK);
+			};
 		}
 	}, [electron, dispatch, settings.enableFullscreenBreak]);
-	useEffect(() => {
-		toggleFullscreenBreak();
-	}, [toggleFullscreenBreak]);
 
 	useEffect(() => {
 		if (isElectron() && !settings.enableFullscreenBreak) {
